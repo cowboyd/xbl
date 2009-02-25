@@ -46,10 +46,10 @@ public class Session {
 		this.client = new HttpClient();
 	}
 
-	public String getFriends() throws NotSignedInException {
+	public FriendList getFriends() throws NotSignedInException {
 		GetFriends friends = get(FRIENDS_URL, GetFriends.class);
 		NotSignedInException.check(friends.isSuccess(), "You must sign in first");
-		return friends.spew();
+		return friends.list();
 	}
 
 	private Response get(String url) {
@@ -95,6 +95,6 @@ public class Session {
 	public static void main(String[] args) {
 		Session xbl = new Session();
 		xbl.signIn(args[0], args[1]);
-		System.out.println("xbl.getFriends() = " + xbl.getFriends());
+		System.out.println("FRIENDS:\n " + xbl.getFriends());
 	}
 }

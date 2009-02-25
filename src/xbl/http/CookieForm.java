@@ -10,7 +10,7 @@ public class CookieForm extends Response implements Form {
 
 	public CookieForm(HttpMethod response) {
 		super(response);
-		this.element = queryElement("//*:form[@name='fmHF']");
+		this.element = findUniqueElement("//*:form[@name='fmHF']");
 	}
 
 	public String getActionURL() {

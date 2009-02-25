@@ -1,14 +1,12 @@
 package xbl.http;
 
 import nu.xom.*;
+import nux.xom.xquery.XQueryUtil;
 import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.Header;
 import xbl.error.NetworkException;
 import xbl.error.SystemException;
 
 import java.io.IOException;
-
-import nux.xom.xquery.XQueryUtil;
 
 public class Response {
 
@@ -19,12 +17,6 @@ public class Response {
 		this.response = response;
 		try {
 			this.document = new Builder(new org.ccil.cowan.tagsoup.Parser()).build(response.getResponseBodyAsStream());
-			System.out.println(this.response.getName() + " " + this.response.getStatusCode() + " " + this.response.getStatusText() + ": " + this.response.getURI());
-			for (int i = 0; i < this.response.getResponseHeaders().length; i++) {
-				Header header = this.response.getResponseHeaders()[i];
-				System.out.println("  " + header.getName() + ": " + header.getValue());
-			}
-			System.out.println("Body:\n" + this.document.toXML());
 		} catch (ParsingException e) {
 			throw new SystemException("Unable to parse response from XBox Live", e);
 		} catch (IOException e) {
@@ -44,15 +36,46 @@ public class Response {
 		return this.response.getResponseHeader("Location").getValue();
 	}
 
-	protected Element queryElement(String xpath) {
-		return (Element) query(xpath).get(0);
-	}
-
 	protected Nodes query(Node context, String xpath) {
 		return XQueryUtil.xquery(context, xpath);
 	}
 
 	protected Nodes query(String xpath) {
 		return this.query(this.document, xpath);
+	}
+
+	protected Element findUniqueElement(String xpath) {
+		return findUniqueElement(this.document, xpath);
+	}
+
+	protected Element findUniqueElement(Node context, String xpath) {
+		return (Element) query(context, xpath).get(0);
+	}
+
+	protected int integer(Node context, String xquery) {
+		String t = text(context, xquery);
+		return t == null || t.trim().equals("") ? 0 : new Integer(t);
+	}
+
+	protected String text(Node context, String xquery) {
+		Nodes nodes = query(context, xquery);
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < nodes.size(); i++) {
+			Node node = nodes.get(i);
+			if (node instanceof Attribute) {
+				Attribute attr = (Attribute)node;
+				builder.append(attr.getValue());
+			} else {
+				for (int j = 0; j < node.getChildCount(); j++) {
+					Node child = node.getChild(j);
+					if (child instanceof Text) {
+						Text text = (Text) child;
+						builder.append(text.toXML());
+					}
+				}
+			}
+		}
+
+		return builder.toString().trim().replaceAll("\\s+", " ");
 	}
 }

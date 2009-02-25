@@ -6,9 +6,8 @@ public class Friend {
 	private String tileURL;
 	private int gamerScore;
 	private String status;
-	private String lastSeen;
-	private String lastActivity;
 	private String profileURL;
+	private String info;
 
 
 	public String getGamerTag() {
@@ -43,20 +42,12 @@ public class Friend {
 		this.status = status;
 	}
 
-	public String getLastSeen() {
-		return lastSeen;
+	public String getInfo() {
+		return info;
 	}
 
-	public void setLastSeen(String lastSeen) {
-		this.lastSeen = lastSeen;
-	}
-
-	public String getLastActivity() {
-		return lastActivity;
-	}
-
-	public void setLastActivity(String lastActivity) {
-		this.lastActivity = lastActivity;
+	public void setInfo(String info) {
+		this.info = info;
 	}
 
 	public String getProfileURL() {
@@ -68,11 +59,6 @@ public class Friend {
 	}
 
 	public String toString() {
-		String seen = lastActivity != null && !lastActivity.trim().equals("") ? lastSeen + "(" + lastActivity + ")" : lastSeen;
-		return String.format("{gt: %s, tile: %s, score: %d, status: %s, lastSeen: %s, url: %s", gamerTag, tileURL, gamerScore, status, seen, profileURL);
-	}
-
-	public boolean hasLastActivity() {
-		return lastActivity != null && !"".equals(lastActivity.trim());
+		return String.format("{gt: %s, tile: %s, score: %d, status: %s, info: %s, url: %s", gamerTag, tileURL, gamerScore, status, info, profileURL);
 	}
 }

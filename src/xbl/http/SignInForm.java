@@ -12,7 +12,7 @@ public class SignInForm extends Response implements Form {
 
 	public SignInForm(HttpMethod response) {
 		super(response);
-		this.element = this.queryElement("//*:form[@name='f1']");
+		this.element = this.findUniqueElement("//*:form[@name='f1']");
 	}
 
 	public void setEmail(String email) {
