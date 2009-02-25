@@ -1,4 +1,4 @@
-package xbox;
+package xbl;
 
 import java.util.Date;
 

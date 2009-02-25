@@ -1,4 +1,4 @@
-package xbl;
+package xbl.error;
 
 public class NetworkException extends RuntimeException {
 
