@@ -20,9 +20,14 @@ public class Session {
 
 	public static final String FRIENDS_URL = "http://live.xbox.com/en-US/profile/Friends.aspx";
 
-	private HttpClient client = new HttpClient();
+	private HttpClient client;
 
 	public Session() {
+		init();
+	}
+
+	private void init() {
+		client = new HttpClient();
 		client.getParams().setParameter(HttpMethodParams.USER_AGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.0.3) Gecko/2008092414 Firefox/3.0.3");
 	}
 
@@ -43,7 +48,7 @@ public class Session {
 	}
 
 	public void signOut() {
-		this.client = new HttpClient();
+		init();
 	}
 
 	public FriendList getFriends() throws NotSignedInException {

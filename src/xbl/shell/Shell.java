@@ -50,6 +50,7 @@ public class Shell implements SignalHandler {
 				ScriptableObject.putProperty(scope, "quit", quit);
 				ScriptableObject.putProperty(scope, "exit", quit);
 				ScriptableObject.putConstProperty(scope, "xbl", new Session());
+				System.out.println("//quit() or exit() to leave shell");
 				System.out.println("var xbl = new Packages.xbl.Session()");
 
 				//noinspection InfiniteLoopStatement
