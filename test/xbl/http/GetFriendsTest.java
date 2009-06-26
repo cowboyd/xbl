@@ -29,18 +29,18 @@ public class GetFriendsTest {
 
 	@Test
 	public void CorrectlyGetsTheRightNumberOfFriendElements() {
-		assertEquals(28, list.size());
+		assertEquals(22, list.size());
 	}
 
 	@Test
 	public void FindsActiveFriendProperties() {
-		Friend friend = list.get(0);
-		assertEquals("JKGuy16", friend.getGamerTag());
-		assertEquals("http://live.xbox.com/en-US/profile/profile.aspx?pp=0&GamerTag=JKGuy16", friend.getProfileURL());
-		assertEquals("http://image.xboxlive.com/global/t.54540809/tile/0/18053", friend.getTileURL());
-		assertEquals(10576, friend.getGamerScore());
-		assertEquals("Online", friend.getStatus());
-		assertEquals("Playing Xbox 360 Dashboard", friend.getInfo());
+		Friend friend = list.get(1);
+		assertEquals("dan494", friend.getGamerTag());
+		assertEquals("http://live.xbox.com/en-US/profile/profile.aspx?pp=0&GamerTag=dan494", friend.getProfileURL());
+		assertEquals("http://avatar.xboxlive.com/avatar/Dan494/avatarpic-s.png", friend.getTileURL());
+		assertEquals(7355, friend.getGamerScore());
+		assertEquals("Offline", friend.getStatus());
+		assertEquals("Last seen 06/24/09 playing The Orange Box", friend.getInfo());
 	}
 	 
 }
