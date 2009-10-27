@@ -2,20 +2,11 @@ package xbl.http;
 
 import org.apache.commons.httpclient.HttpMethod;
 import xbl.Friend;
-import xbl.error.SystemException;
 
-import java.io.IOException;
-
-/**
- * Created by IntelliJ IDEA.
- * User: A018189
- * Date: Oct 27, 2009
- * Time: 3:50:35 PM
- * To change this template use File | Settings | File Templates.
- */
 public class Profile extends Response {
 
-    private static String PROFILE_URL = "http://live.xbox.com/en-GB/profile/profile.aspx?pp=0&GamerTag=";
+    private static String PROFILE_URL = "http://live.xbox.com/en-US/profile/profile.aspx?pp=0&GamerTag=";
+    private static String AVATAR_URL = "http://avatar.xboxlive.com/avatar/%s/avatarpic-s.png";
 
     public Profile(HttpMethod response) {
 		super(response);
@@ -26,26 +17,22 @@ public class Profile extends Response {
         return (PROFILE_URL + gamertag);
     }
 
-    public Friend toFriend()
+    public static String profileUrlForAvatarPic(String gamertag)
     {
-        /**
-         * TODO:
-         */
-        return (null);
+        return (String.format(AVATAR_URL, gamertag));
     }
 
-    public String toFriendString()
+    public Friend toFriend()
     {
-        String resp;
-        System.out.println("toFriend");
-        try
-        {
-            resp = super.response.getResponseBodyAsString();
-        }
-        catch(IOException e)
-        {
-            throw new SystemException("Unable to parse profile response from XBox Live", e);
-        }
-        return(resp);
+        Friend friend = new Friend();
+        String gamertag = text(findUniqueElement("//*:div[@class='XbcMyXboxCardGamertag']"), "./*:span");
+        friend.setGamerTag(gamertag);
+        friend.setProfileURL(profileUrlForGamertag(gamertag));
+        friend.setTileURL(profileUrlForAvatarPic(gamertag));
+        friend.setGamerScore(integer(findUniqueElement("//*:div[@class='XbcMyXboxCardGamerscore']"), "./*:span"));
+        friend.setStatus(text(findUniqueElement("//*:div[@class='XbcMyXboxCardLeftPane']/*:div[2]"), "./*:span[@class='XbcProfilePresenceStatus'][1]"));
+        friend.setInfo(text(findUniqueElement("//*:div[@class='XbcMyXboxCardLeftPane']/*:div[2]"), "./*:span[@class='XbcProfilePresenceStatus'][2]"));
+
+        return (friend);
     }
 }
