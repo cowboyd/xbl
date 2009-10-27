@@ -35,7 +35,6 @@ public class GetFriends extends Response {
 			friend.setGamerScore(integer(element, "./*:td[@headers='Gamerscore']/*:span"));
 			friend.setStatus(text(element,  "./*:td[@headers='Status']"));
 			friend.setInfo(text(element,  "./*:td[@headers='Info']"));
-
 		}
 		return new FriendList(friends.toArray(new Friend[friends.size()]));
 	}

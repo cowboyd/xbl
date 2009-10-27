@@ -35,6 +35,11 @@ public class Session {
 		init();
 	}
 
+    public Session(String proxyHost, int proxyPort) {
+		this();
+        client.getHostConfiguration().setProxy(proxyHost, proxyPort);
+	}
+
 	private void init() {
 		client = new HttpClient();
 		client.getParams().setParameter(HttpMethodParams.USER_AGENT, "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.0.3) Gecko/2008092414 Firefox/3.0.3");
@@ -65,6 +70,14 @@ public class Session {
 		NotSignedInException.check(friends.isSuccess(), "You must sign in first");
 		return friends.list();
 	}
+
+    public Profile getProfile(String gamertag)
+    {
+        System.out.print(Profile.profileUrlForGamertag(gamertag));
+        Profile profile = get(Profile.profileUrlForGamertag(gamertag), Profile.class);
+
+        return (profile);
+    }
 
 	private Response get(String url) {
 		return get(url, Response.class);

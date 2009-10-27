@@ -13,34 +13,28 @@ import xbl.FriendList;
 import xbl.Friend;
 
 
-public class GetFriendsTest {
-	private GetFriends friends;
-	private FriendList list;
+public class GetProfileTest {
+    private Profile profile;
 
 	@Before
 	public void parse() {
-		friends = new GetFriends(new GetMethod() {
+		profile = new Profile(new GetMethod() {
 			public InputStream getResponseBodyAsStream() throws IOException {
-				return GetFriends.class.getResourceAsStream("friends.html");
+				return GetFriends.class.getResourceAsStream("profile.html");
 			}
 		});
-		list = friends.list();
 	}
 
-	@Test
-	public void CorrectlyGetsTheRightNumberOfFriendElements() {
-		assertEquals(25, list.size());
-	}
 
 	@Test
-	public void FindsActiveFriendProperties() {
-		Friend friend = list.get(0);
+	public void FindFriendProperties() {
+		Friend friend = profile.toFriend();
 		assertEquals("proswell", friend.getGamerTag());
-		assertEquals("http://live.xbox.com/en-GB/profile/profile.aspx?pp=0&GamerTag=proswell", friend.getProfileURL());
+		assertEquals("http://live.xbox.com/en-US/profile/profile.aspx?pp=0&GamerTag=proswell", friend.getProfileURL());
 		assertEquals("http://avatar.xboxlive.com/avatar/proswell/avatarpic-s.png", friend.getTileURL());
 		assertEquals(3236, friend.getGamerScore());
 		assertEquals("Online", friend.getStatus());
-		assertEquals("Playing Xbox 360 DashboardWatching a video", friend.getInfo());
+		assertEquals("Playing Xbox 360 Dashboard", friend.getInfo());
 	}
-	 
+
 }
