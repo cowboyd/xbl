@@ -14,15 +14,14 @@ import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.params.HttpMethodParams;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.io.IOException;
-
-import xbl.http.*;
 import xbl.error.NetworkException;
 import xbl.error.NotSignedInException;
 import xbl.error.SystemException;
+import xbl.http.*;
+
+import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 
 public class Session {
@@ -73,9 +72,7 @@ public class Session {
 
     public Profile getProfile(String gamertag)
     {
-        System.out.print(Profile.profileUrlForGamertag(gamertag));
         Profile profile = get(Profile.profileUrlForGamertag(gamertag), Profile.class);
-
         return (profile);
     }
 

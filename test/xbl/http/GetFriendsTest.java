@@ -3,14 +3,13 @@ package xbl.http;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
+import xbl.Friend;
+import xbl.FriendList;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import xbl.FriendList;
-import xbl.Friend;
+import static org.junit.Assert.assertEquals;
 
 
 public class GetFriendsTest {
@@ -34,13 +33,14 @@ public class GetFriendsTest {
 
 	@Test
 	public void FindsActiveFriendProperties() {
-		Friend friend = list.get(0);
+		Friend friend = list.get(0);  
 		assertEquals("proswell", friend.getGamerTag());
 		assertEquals("http://live.xbox.com/en-GB/profile/profile.aspx?pp=0&GamerTag=proswell", friend.getProfileURL());
 		assertEquals("http://avatar.xboxlive.com/avatar/proswell/avatarpic-s.png", friend.getTileURL());
 		assertEquals(3236, friend.getGamerScore());
 		assertEquals("Online", friend.getStatus());
-		assertEquals("Playing Xbox 360 DashboardWatching a video", friend.getInfo());
+        assertEquals("Playing Xbox 360 Dashboard - Watching a video", friend.getInfo());
+
 	}
 	 
 }
